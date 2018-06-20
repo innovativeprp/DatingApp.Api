@@ -13,7 +13,7 @@ namespace DatingApp.API.Data
         public AuthRepository(DataContext dbContext) => _dbContext = dbContext;
         public async Task<User> LoginAsync(string username, string password)
         {
-            var user =await _dbContext.Users.FirstOrDefaultAsync(x=>x.UserName==username);
+            var user =await _dbContext.Users.FirstOrDefaultAsync(x=>x.UserName==username.ToLower());
             if(user==null) return null;
 
             if(!VerifyPasswordHash(password,user.Passwordhash,user.PasswordSalt))return null;
