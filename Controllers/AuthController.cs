@@ -19,7 +19,10 @@ namespace DatingApp.Api.Controllers
      {
          //validate user
          userRegisterDto.Username=userRegisterDto.Username.ToLower();
-         if(await _repo.UserExists(userRegisterDto.Username)) return BadRequest("Username is already taken");
+         if(await _repo.UserExists(userRegisterDto.Username))
+         ModelState.AddModelError("UserName","Username is already taken");
+
+         if(!ModelState.IsValid) return BadRequest(ModelState);
 
         
          var user =new User { UserName=userRegisterDto.Username};
